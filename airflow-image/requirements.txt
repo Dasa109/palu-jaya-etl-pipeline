@@ -1,0 +1,6 @@
+openpyxl
+apache-airflow-providers-apache-spark
+dotenv
+rapidfuzz
+python-Levenshtein
+thefuzz

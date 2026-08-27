@@ -1,0 +1,23 @@
+FROM apache/airflow:3.3.1-python3.10
+
+USER root
+
+# Match the Java version jupyterspark uses (java21), so the copied Spark binaries/jars run consistently
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends openjdk-17-jre-headless && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Pull the already-built Spark installation straight from your jupyterspark image —
+# no wget, no re-downloading, and guaranteed byte-identical to what the executors run
+# copy spark dari image ini, yang ada spark-submitnya
+COPY --from=jupyterspark:base /opt/spark /opt/spark
+
+ENV SPARK_HOME=/opt/spark
+ENV PATH="$SPARK_HOME/bin:$PATH"
+
+COPY requirements.txt /requirements.txt
+
+USER airflow
+
+RUN pip3 install -r /requirements.txt
+

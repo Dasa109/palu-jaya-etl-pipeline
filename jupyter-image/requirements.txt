@@ -1,0 +1,5 @@
+dotenv
+rapidfuzz
+python-Levenshtein
+thefuzz
+pyarrow

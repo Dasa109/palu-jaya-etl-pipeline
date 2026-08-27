@@ -1,0 +1,9 @@
+FROM jupyterspark:base
+
+USER root
+COPY requirements.txt /requirements.txt
+RUN pip3 install -r /requirements.txt
+
+ENV PATH="$PATH:/opt/spark/bin"
+
+USER spark
